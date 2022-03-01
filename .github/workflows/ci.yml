@@ -15,7 +15,7 @@ jobs:
         with:
           path: ~/.npm # path
           key: ${{ runner.os}}-node-${{ hashFiles('**/package-lock.json') }} # Cache key for retrieve, depending if our npm dependacies have changed
-          restore-key: | # Check for all caches that starts with the parameter
+          restore-keys: | # Check for all caches that starts with the parameter
             ${{ runner.os}}-node-
       - name: Use NodeJS
         uses: actions/setup-node@v1
