@@ -1,4 +1,4 @@
 # Define how owns which files
-* @jotahe
-*.js @jotahe
-*.yml @jotahe
+* @jotahe @zelfick
+*.js @jotahe @zelfick
+*.yml @jotahe @zelfick
