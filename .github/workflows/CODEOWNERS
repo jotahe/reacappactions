@@ -1,0 +1,4 @@
+# Define how owns which files
+* @jotahe
+*.js @jotahe
+*.yml @jotahe
