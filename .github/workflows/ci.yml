@@ -29,17 +29,17 @@ jobs:
       - name: Upload Test Coverage
         uses: actions/upload-artifact@v1
         with:
-          name: code-coverage     # name of the coverage file
-          path: coverage          # Folder where the coverage is stored
+          name: code-coverage # name of the coverage file
+          path: coverage # Folder where the coverage is stored
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
-      - name: Upload Build Folder    # We would upload the build
+      - name: Upload Build Folder # We would upload the build
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v1
         with:
-          name: build     # name of the build
-          path: build     # Folder where the build is stored
+          name: build # name of the build
+          path: build # Folder where the build is stored
       #- name: Download Build Folder    # Exists the download action as well
       #  uses: actions/download-artifact@v1
       - name: Deploy to Stage
