@@ -26,9 +26,24 @@ jobs:
       - run: npm test -- --coverage
         env:
           CI: true
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage     # name of the coverage file
+          path: coverage          # Folder where the coverage is stored
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
+      - name: Upload Build Folder    # We would upload the build
+        uses: actions/upload-artifact@v1
+        with:
+          name: build     # name of the build
+          path: build     # Folder where the build is stored
+      #- name: Download Build Folder    # We would upload the build
+       # uses: actions/download-artifact@v1
+        #with:
+        #  name: build     # name of the build
+        #  path: build     # Folder where the build is stored
       - name: Deploy to Stage
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain herrancorp.surge.sh
