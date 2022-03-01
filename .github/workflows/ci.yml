@@ -25,6 +25,6 @@ jobs:
       - name: Deploy to Stage
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain herrancorp.surge.sh
-        env: 
+        env:
           SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
           SURGE_TOKEN: ${{secrets.SURGE_LOGIN}}
