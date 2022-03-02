@@ -1,9 +1,9 @@
 name: CI
 on:
   pull_request:
-    branches: [develop]
+    branches: [develop, main]
   push:
-    branches: [develop]
+    branches: [develop, main]
 
 jobs:
   build:
@@ -42,6 +42,11 @@ jobs:
           path: build # Folder where the build is stored
       #- name: Download Build Folder    # Exists the download action as well
       #  uses: actions/download-artifact@v1
+      - name: Create a Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
       - name: Deploy to Stage
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain herrancorp.surge.sh
