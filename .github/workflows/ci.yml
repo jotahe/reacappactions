@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
+      SURGE_TOKEN: ${{secrets.SURGE_TOKEN}}
     steps:
       - uses: actions/checkout@v2
       - name: Cache node_modules
@@ -55,8 +58,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
       - name: Deploy to Stage
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: npx surge --project ./build --domain herrancorp.surge.sh
+      - name: Deploy to Production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx surge --project ./build --domain herranprod.surge.sh # New generated url for surge
+      - name: Upload Coverage Reports to Codecov
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx codecov
         env:
-          SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
-          SURGE_TOKEN: ${{secrets.SURGE_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
