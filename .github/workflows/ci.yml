@@ -56,7 +56,8 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}} # This token would not trigger the release event for another workflow
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN }} # new personal token that triggers release workflow
       - name: Deploy to Stage
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: npx surge --project ./build --domain herrancorp.surge.sh
