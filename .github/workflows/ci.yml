@@ -43,7 +43,7 @@ jobs:
           path: build # Folder where the build is stored
       #- name: Download Build Folder    # Exists the download action as well
       #  uses: actions/download-artifact@v1
-      
+
       - name: ZIP Asset
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
