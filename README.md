@@ -1,3 +1,6 @@
+# Adding a status badge in README.md
+![](https://github.com/jotahe/reacappactions/workflows/CI/badge.svg?branch=develop&event=push)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
