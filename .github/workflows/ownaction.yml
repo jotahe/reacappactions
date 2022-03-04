@@ -1,0 +1,16 @@
+on: push
+jobs:
+  testown-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/simplehello
+        id: SimpleHello
+        with:
+          who-to-greet: "Rayita"
+      - run: |
+          echo "Time: ${{ steps.SimpleHello.outputs.time}}"
+# In order to create the action wwe need to compile the project in order to have 
+# The dependacies included in the build, for it we use: npm i -D @zeit/ncc
+# Set this vble: export NODE_OPTIONS=--openssl-legacy-provider
+# Then compile with: npx ncc build .github/actions/simplehello/index.js -o .github/actions/simplehello/dist
