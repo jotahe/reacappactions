@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 try {
-  //throw( new error("Testing some error message"));
+  throw( new Error("Testing some error message"));
   const name = core.getInput('who-to-greet');
   console.log(`Simple Hello ${name}`);
 

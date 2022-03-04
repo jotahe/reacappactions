@@ -8513,7 +8513,7 @@ const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 
 try {
-  //throw( new error("Testing some error message"));
+  throw( new Error("Testing some error message"));
   const name = core.getInput('who-to-greet');
   console.log(`Simple Hello ${name}`);
 
