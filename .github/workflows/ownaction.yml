@@ -4,6 +4,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: ./.github/actions/reportissue
+        id: issue # identification of the step in order to identify it easily
+        with:
+          token: ${{ secrets.GITHUB_TOKEN}}
+          title: Title
+          body: Body
+          assignees: 'jotahe,zelfick' # The api is waiting an array so we can pass as coma separated string
+          #assignees: |  # Other option is to pass as formated string, with user for each line
+          #  jotahe
+          #  zelfick
+      - run: |
+          echo ${{ steps.issue.outputs.issue }}
       - uses: ./.github/actions/simplehello
         id: SimpleHello
         with:
