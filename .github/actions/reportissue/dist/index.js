@@ -8520,7 +8520,8 @@ async function runasync(){    // In order to use await when must put all code in
     const assignees = core.getInput('assignees');
 
     // fetch we can use a fetch function to send api requests but github core have a package to do it
-    const octokit = new github.GitHub(token);
+    // const octokit = new github.GitHub(token); old version of the library
+    const octokit = new github.getOctoki(token);
     
     const response = await octokit.issue.create({  // put await in order to wait for response
         // owner: github.context.repo.owner,   // We get the token directly from github vbles
