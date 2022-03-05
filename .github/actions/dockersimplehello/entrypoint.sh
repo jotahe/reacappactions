@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/bash
 
 # to log and debug message we can do this
 echo "::debug ::Debug Message"   # VM would now that it have to load a debug message
