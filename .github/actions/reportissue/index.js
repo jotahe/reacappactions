@@ -12,7 +12,7 @@ async function runasync(){    // In order to use await when must put all code in
     // const octokit = new github.GitHub(token); old version of the library
     const octokit = new github.getOctokit(token);
     
-    const {data:response} = await octokit.rest.issues.create({  // put await in order to wait for response
+    const response = await octokit.rest.issues.create({  // put await in order to wait for response
         // owner: github.context.repo.owner,   // We get the token directly from github vbles
         // repo: github.context.repo.,
         ...github.context.repo,    // we can use this other form to pass context
@@ -22,7 +22,7 @@ async function runasync(){    // In order to use await when must put all code in
         assignees: assignees ? assignees.split(',') : undefined  // it would make the string into array
         // assignees: assignees ? assignees.split('\n') : undefined  // in this case we would fill the array separating by lines
     });
-    core.setOutput("issue", JSON.stringify(response,data));  // it would be a string a not an object
+    core.setOutput("issue", JSON.stringify(response.data));  // it would be a string a not an object
 
 
     } catch(error) {
