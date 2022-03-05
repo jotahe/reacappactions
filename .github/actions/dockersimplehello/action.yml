@@ -16,4 +16,4 @@ runs: # we can define a docker action
   #   keyvalue: pairs
   # entrypoint:   we are defining the entrypoint directly in the dockerfile
   args: # input evaluated dynamically and passed to the entrypoint
-    - ${{ inputs.who-to-greet }}   
+    - ${{ inputs.who-to-greet }}
