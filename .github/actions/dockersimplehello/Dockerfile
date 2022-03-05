@@ -20,9 +20,6 @@ WORKDIR /rayita
 # Copy the script from our repository
 COPY entrypoint.sh ./entrypoint.sh
 
-#Give all permission to entrypoint
-RUN chmod +x ./entrypoint.sh
-
 # execute the entrypoint in the docker container
 ENTRYPOINT [ "./entrypoint.sh" ]
 # we can pass arguments to entrypoint it would be 
