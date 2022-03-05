@@ -23,6 +23,13 @@ jobs:
       - run: |
           echo "Time: ${{ steps.SimpleHello.outputs.time}}"
           echo $EXVBLE
+      - uses: ./.github/actions/dockersimplehello
+        id: DockerSimpleHello
+        with:
+          who-to-greet: "Rayita2022"
+      - run: |
+          echo "Time: ${{ steps.DockerSimpleHello.outputs.time}}"
+          echo $EXPVBLE
 # In order to create the action wwe need to compile the project in order to have 
 # The dependacies included in the build, for it we use: npm i -D @zeit/ncc
 # Set this vble: export NODE_OPTIONS=--openssl-legacy-provider :you have to remove later in order to use ssh
