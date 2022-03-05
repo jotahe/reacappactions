@@ -21,6 +21,6 @@ WORKDIR /rayita
 COPY entrypoint.sh ./entrypoint.sh
 
 # execute the entrypoint in the docker container
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "entrypoint.sh" ]
 # we can pass arguments to entrypoint it would be 
 #CMD ["executable"]
