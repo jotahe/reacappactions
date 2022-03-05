@@ -12,7 +12,7 @@ async function runasync(){    // In order to use await when must put all code in
     // const octokit = new github.GitHub(token); old version of the library
     const octokit = new github.getOctokit(token);
     
-    const response = await octokit.issue.create({  // put await in order to wait for response
+    const response = await octokit.rest.issue.create({  // put await in order to wait for response
         // owner: github.context.repo.owner,   // We get the token directly from github vbles
         // repo: github.context.repo.,
         ...github.context.repo,    // we can use this other form to pass context
