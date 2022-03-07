@@ -3,18 +3,15 @@ FROM alpine:3.11
 # Install bash to use it
 RUN apk update && apk upgrade && apk add bash
 
-# Install dos2unix to guarantee the correct format of the file
-RUN apk add dos2unix
-
 # Create a group and user
-RUN addgroup -S appgroup && adduser -S rayita -G appgroup
+#RUN addgroup -S appgroup && adduser -S rayita -G appgroup
 
 # add specific user to run the shell
-RUN apk add sudo
-RUN echo "rayita ALL=(ALL) ALL" > /etc/sudoers.d/rayita && chmod 0440 /etc/sudoers.d/rayita
+#RUN apk add sudo
+#RUN echo "rayita ALL=(ALL) ALL" > /etc/sudoers.d/rayita && chmod 0440 /etc/sudoers.d/rayita
 
 # Do then everything else as that user
-USER rayita
+#USER rayita
 
 # Set the working directory
 WORKDIR /rayita
