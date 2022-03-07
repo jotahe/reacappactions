@@ -40,6 +40,17 @@ jobs:
         with:
           slack_webhook: ${{ secrets.SLACKNOT_WEBHOOK }}
           message: Hello Slack from owngithub action PHP
+      - name: Report issue ownaction
+        uses: jotahe/javascriptaction@v1
+        id: ownissuefxn # identification of the step in order to identify it easily
+        with:
+          token: ${{ secrets.GITHUB_TOKEN}}
+          title: Ownissuefxn
+          body: Test ownaction published
+          assignees: 'jotahe,zelfick' # The api is waiting an array so we can pass as coma separated string
+          #assignees: |  # Other option is to pass as formated string, with user for each line
+          #  jotahe
+          #  zelfick
 # In order to create the action wwe need to compile the project in order to have 
 # The dependacies included in the build, for it we use: npm i -D @zeit/ncc
 # Set this vble: export NODE_OPTIONS=--openssl-legacy-provider :you have to remove later in order to use ssh
