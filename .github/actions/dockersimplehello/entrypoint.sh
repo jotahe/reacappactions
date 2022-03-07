@@ -16,4 +16,5 @@ echo 'some stuff'
 echo 'some stuff'
 echo "::endgroup"
 
-echo '::set-env name:DOCKERSIMPLEHELLO::dockersimplehello'   # Set environment variable
+echo "{DOCKERSIMPLEHELLO}={dockersimplehello}" >> $EXPVBLE   # New way to export environment variables
+# echo '::set-env name:DOCKERSIMPLEHELLO::dockersimplehello'   # old github actions way
