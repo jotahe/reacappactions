@@ -1,5 +1,7 @@
 FROM alpine:3.11
 
+# Install bash to use it
+RUN apk update && apk upgrade && apk add bash
 
 # Install dos2unix to guarantee the correct format of the file
 RUN apk add dos2unix
@@ -20,7 +22,13 @@ WORKDIR /rayita
 # Copy the script from our repository
 COPY entrypoint.sh ./entrypoint.sh
 
+
 # execute the entrypoint in the docker container
-ENTRYPOINT [ "entrypoint.sh" ]
+ENTRYPOINT [ "/rayita/entrypoint.sh" ]
 # we can pass arguments to entrypoint it would be 
 #CMD ["executable"]
+
+# To build the image
+# nerdctl build -t dorckersimplehello .
+# To run the container
+# nerdctl run --rm -it dockersimplehello
