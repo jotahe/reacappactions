@@ -16,5 +16,5 @@ echo 'some stuff'
 echo 'some stuff'
 echo "::endgroup"
 
-echo "{DOCKERSIMPLEHELLO}={dockersimplehello}" >> $GITHUB_ENV   # New way to export environment variables
+sudo echo "{DOCKERSIMPLEHELLO}={dockersimplehello}" >> $GITHUB_ENV   # New way to export environment variables
 # echo '::set-env name:DOCKERSIMPLEHELLO::dockersimplehello'   # old github actions way
