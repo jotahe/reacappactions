@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Force an error to see the failure in the action
+if [ true ]
+then
+  echo 'error forced message'
+  exit 1
+fi
+
 # to log and debug message we can do this
 echo "::debug ::Debug Message"   # VM would now that it have to load a debug message
 echo "::warning ::Warning Message"
