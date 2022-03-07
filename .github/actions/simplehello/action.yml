@@ -1,0 +1,15 @@
+name: SimpleHello
+author: Jorge Herran
+description: It is a javascript action that greets
+inputs:
+  who-to-greet:
+    description: 'Who to greet'
+    required: true
+    default: Jorge
+outputs:
+  time:
+    description: 'The greeting time'
+runs: # we can define a javascript or a docker action
+  using: 'node12'
+  main: "dist/index.js" # We call the compiled index which includes the required libraries
+ 

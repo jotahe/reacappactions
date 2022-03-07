@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
+      SURGE_TOKEN: ${{secrets.SURGE_TOKEN}}
     steps:
       - uses: actions/checkout@v2
       - name: Cache node_modules
@@ -20,7 +23,8 @@ jobs:
       - name: Use NodeJS
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          #node-version: "12.x"  modified node version required for semantic release
+          node-version: "14.17"
       - run: npm ci # more suitable for ci workflows
       - run: npm run format:check
       - run: npm test -- --coverage
@@ -42,14 +46,38 @@ jobs:
           path: build # Folder where the build is stored
       #- name: Download Build Folder    # Exists the download action as well
       #  uses: actions/download-artifact@v1
+
+      - name: ZIP Asset
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          zip -r build.zip ./build
+          zip -r coverage.zip ./coverage
       - name: Create a Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}} # This token would not trigger the release event for another workflow
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN }} # new personal token that triggers release workflow
       - name: Deploy to Stage
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: npx surge --project ./build --domain herrancorp.surge.sh
+      - name: Deploy to Production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx surge --project ./build --domain herranprod.surge.sh # New generated url for surge
+      - name: Upload Coverage Reports to Codecov
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx codecov
         env:
-          SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
-          SURGE_TOKEN: ${{secrets.SURGE_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Open Issue
+        if: failure() && github.event_name == 'pull_request'
+        run: |   # Change GITHUB_TOKEN to semmantic in order to have the issue open by yourself and not the github bot
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.SEMANTIC_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue on failure for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
+            "assignees": ["${{ github.event.pull_request.user.login }}"]
+          }'

@@ -1,0 +1,58 @@
+on: push
+jobs:
+  testown-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/reportissue
+        id: issue # identification of the step in order to identify it easily
+        with:
+          token: ${{ secrets.GITHUB_TOKEN}}
+          title: Title
+          body: Body
+          assignees: 'jotahe,zelfick' # The api is waiting an array so we can pass as coma separated string
+          #assignees: |  # Other option is to pass as formated string, with user for each line
+          #  jotahe
+          #  zelfick
+      - run: |
+          echo ${{ steps.issue.outputs.issue }}
+      - uses: ./.github/actions/simplehello
+        id: SimpleHello
+        with:
+          who-to-greet: "Rayita"
+      - run: |
+          echo "Time: ${{ steps.SimpleHello.outputs.time}}"
+          echo $EXVBLE
+ #     - name: Login to Docker Hub
+ #       uses: docker/login-action@v1
+ #       with:
+ #         username: ${{ secrets.DOCKER_HUB_USERNAME }}
+ #         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - uses: ./.github/actions/dockersimplehello
+        id: DockerSimpleHello
+        with:
+          who-to-greet: "Rayita2022"
+      - run: |
+          echo "Time: ${{ steps.DockerSimpleHello.outputs.time}}"
+          echo $EXPVBLE
+      - name: Send Slack MessagePHP
+        uses: ./.github/actions/slackphp
+        with:
+          slack_webhook: ${{ secrets.SLACKNOT_WEBHOOK }}
+          message: Hello Slack from owngithub action PHP
+      - name: Report issue ownaction
+        # normaly version is pointed to simple one v1.0.0 -> v1 to do that look at action/toolkit
+        uses: jotahe/javascriptaction@v1
+        id: ownissuefxn # identification of the step in order to identify it easily
+        with:
+          token: ${{ secrets.GITHUB_TOKEN}}
+          title: Ownissuefxn
+          body: Test ownaction published
+          assignees: 'jotahe,zelfick' # The api is waiting an array so we can pass as coma separated string
+          #assignees: |  # Other option is to pass as formated string, with user for each line
+          #  jotahe
+          #  zelfick
+# In order to create the action wwe need to compile the project in order to have 
+# The dependacies included in the build, for it we use: npm i -D @zeit/ncc
+# Set this vble: export NODE_OPTIONS=--openssl-legacy-provider :you have to remove later in order to use ssh
+# Then compile with: npx ncc build .github/actions/simplehello/index.js -o .github/actions/simplehello/dist

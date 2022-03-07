@@ -1,0 +1,16 @@
+name: 'Send a Slack Message using PHP'
+author: Jorge Herran
+description: 'Send a slack message with workflow information'
+inputs:
+  slack_webhook:
+    description: 'Slack webhook'
+    required: true
+  message:
+    description: 'Slack message'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.slack_webhook }}
+    - ${{ inputs.message }}

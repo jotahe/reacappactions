@@ -1,0 +1,19 @@
+name: DockerSimpleHello
+author: Jorge Herran
+description: It is a javascript action that greets
+inputs:
+  who-to-greet:
+    description: 'Who to greet Docker'
+    required: true
+    default: Jorge Herran
+outputs:
+  time:
+    description: 'The greeting time is'
+runs: # we can define a docker action
+  using: 'docker'
+  image: "Dockerfile" # can be a docker image or dockerfile in your repository
+  # env:  you can have environment variables
+  #   keyvalue: pairs
+  # entrypoint:   we are defining the entrypoint directly in the dockerfile
+  args: # input evaluated dynamically and passed to the entrypoint
+    - ${{ inputs.who-to-greet }}
